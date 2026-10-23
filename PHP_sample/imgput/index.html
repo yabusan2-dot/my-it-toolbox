@@ -1,1 +1,26 @@
-
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>プレビュー付きアップロード</title>
+</head>
+<body>
+ <form action="upload.php" method="post" enctype="multipart/form-data">
+   <input type="file" name="file" onchange="previewFile(this);" accept="image/*">
+   <input type="submit" value="送信する">
+ </form>
+ <p>プレビュー:</p>
+ <img id="preview" style="max-width: 300px;">
+ <script>
+   function previewFile(input) {
+     const file = input.files[0];
+     const reader = new FileReader();
+     reader.onload = function(e) {
+       document.getElementById('preview').src = e.target.result;
+     };
+     reader.readAsDataURL(file);
+   }
+ </script>
+</body>
+</html>
