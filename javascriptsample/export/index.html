@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ES Modules Example</title>
+</head>
+<body>
+  <h1>ES Modules の公開関数テスト</h1>
+<p>これはjavascriptでの外部公開と内部関数のスコープの違いを確認するサンプルです</p>
+<p>開発者ツールでのコンソール出力で確認できます</p>
+  <script type="module">
+    import { multiply, carry } from "./math.js";
+
+    console.log("multiply:", multiply(7, 8));
+    console.log("carry:", carry(7, 8));
+  </script>
+</body>
+</html>
