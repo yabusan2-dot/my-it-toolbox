@@ -1,0 +1,13 @@
+; sample macro of Tera Term
+;
+; File: LinuxSSH.ttl
+; Description: Login Linux via SSH
+; Environment: generic
+; Update: 2026/6/8
+; Author: T.Yabu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; 接続実行
+connect '192.168.56.101:22 /ssh /2 /auth=password /user=linuc /passwd=linuc'
+
+end

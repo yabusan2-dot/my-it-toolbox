@@ -1,0 +1,46 @@
+; sample macro of Tera Term
+;
+; File: ciscologin3.ttl
+; Description: telnet setting
+; Environment: generic
+; Update: 2026/6/4
+; Author: T.Yabu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+connect "/C=1"
+pause 2
+sendln
+waitregex "^[A-Za-z0-9._-]+>$" "^[A-Za-z0-9._-]+#$"
+if result = 1 then	
+flushrecv	
+sendln 'enable'	
+elseif result=2 then
+sendln
+endif
+
+sendln "conf t"
+wait "#"
+
+sendln "line vty 0 4"
+wait "#"
+
+sendln "password pass-t"
+wait "#"
+
+sendln "login"
+wait "#"
+
+sendln "exec-timeout 0 0"
+wait "#"
+
+sendln "transport input telnet"
+wait "#"
+
+sendln "exit"
+wait "#"
+
+sendln "enable password pass-e"
+wait "#"
+
+sendln "exit"
+wait "#"
+

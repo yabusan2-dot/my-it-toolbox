@@ -1,0 +1,28 @@
+; sample macro of Tera Term
+;
+; File: listbox.ttl
+; Description: sample of listbox
+; Environment: generic
+; Update: 2026/6/4
+; Author: T.Yabu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; [[初期値設定]]
+;; ユーザ名／パスワードファイル設定
+USERNAME = 'ユーザ名'
+PASSFILE = 'C:\password.dat'
+;; 配列設定(接続先IPアドレスを代入)
+strdim HOSTNM 3
+HOSTNM[0] = '192.168.0.1'
+HOSTNM[1] = '192.168.0.2'
+HOSTNM[2] = '192.168.0.3'
+;===============================================
+;; 接続先ホスト選択
+listbox '接続するIPアドレスを選択して下さい' '接続ホスト選択' HOSTNM
+if result >= 0 then
+    HOSTADDR = HOSTNM[result]
+else
+    end
+endif
+
+;; マクロ終了
+end

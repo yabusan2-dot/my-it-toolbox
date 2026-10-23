@@ -1,0 +1,23 @@
+; sample macro of Tera Term
+;
+; File: ciscologin.ttl
+; Description: auto login via com1 protocol
+; Environment: generic
+; Update: 2026/6/3
+; Author: T.Yabu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+connect "/C=1"
+pause 2
+sendln
+waitregex "^[A-Za-z0-9._-]+>$" "^[A-Za-z0-9._-]+#$"
+if result = 1 then	
+flushrecv	
+messagebox 'ユーザモードです\n特権モードに切り替えます' '状態' 1
+sendln 'enable'	
+elseif result=2 then
+sendln
+endif
+
+waitregex "^[A-Za-z0-9._-]+#$"
+
+messagebox '特権モードです' '状態' 

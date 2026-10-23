@@ -1,0 +1,55 @@
+; sample macro of Tera Term
+;
+; File: ciscologin4.ttl
+; Description: SSH setting with inputBox
+; Environment: generic
+; Update: 2026/6/4
+; Author: T.Yabu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+connect "/C=1"
+pause 2
+sendln
+waitregex "^[A-Za-z0-9._-]+>$" "^[A-Za-z0-9._-]+#$"
+if result = 1 then	
+flushrecv	
+sendln 'enable'	
+elseif result=2 then
+sendln
+endif
+
+sendln "conf t"
+wait "#"
+
+sendln "username admin password pass-s"
+wait "#"
+
+sendln "line vty 5 9"
+wait "#"
+
+sendln "login local"
+wait "#"
+
+sendln "exec-timeout 0 0"
+wait "#"
+
+sendln "transport input ssh"
+wait "#"
+
+sendln "exit"
+wait "#"
+
+sendln "ip domain-name poly.kyoto"
+wait "#"
+
+sendln "crypto key generate rsa"
+
+pause 1
+inputbox '暗号キーのサイズを入力' '暗号化キー入力(inputbox)' '1024'
+messagebox inputstr '暗号キーのサイズ'
+
+sendln inputstr
+wait "#"
+
+sendln "exit"
+wait "#"
+

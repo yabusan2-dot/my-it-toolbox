@@ -1,0 +1,28 @@
+; sample macro of Tera Term
+;
+; File: ciscologin.ttl
+; Description: auto login via com1 protocol
+; Environment: generic
+; Update: 2026/6/3
+; Author: T.Yabu
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+connect "/C=1"
+pause 2
+sendln
+waitregex "^[A-Za-z0-9._-]+>$" "^[A-Za-z0-9._-]+#$"
+if result = 1 then	
+flushrecv	
+sendln 'enable'	
+elseif result=2 then
+sendln
+endif
+
+sendln "terminal length 0"
+
+sendln "show run"
+pause 2
+
+wait "end"
+if result = 1 then 
+sendln "terminal length 24"
+endif
