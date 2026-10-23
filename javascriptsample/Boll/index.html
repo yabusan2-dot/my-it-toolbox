@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Phaser3 Two Bouncing Balls</title>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+</head>
+<body>
+
+  <!-- ★ 速度スライダー UI ★ -->
+  <div style="position:absolute; top:10px; left:10px; z-index:10; background:#fff; padding:10px; border-radius:8px;">
+    <label>速度調整：</label>
+    <input id="speedSlider" type="range" min="0.1" max="3" step="0.1" value="1">
+    <span id="speedValue">1.0</span>
+  </div>
+
+  <div id="phaser-example"></div>
+
+  <script>
+    const config = {
+      type: Phaser.AUTO,
+      width: 800,
+      height: 600,
+      parent: 'phaser-example',
+      physics: {
+        default: 'arcade',
+        arcade: {
+          gravity: { y: 0 },
+          debug: false
+        }
+      },
+      scene: {
+        preload,
+        create,
+        update
+      }
+    };
+
+    let balls = [];
+    let speedScale = 1; // ★ スライダーで変更する速度倍率
+
+    const game = new Phaser.Game(config);
+
+    function preload() {
+      // 青い玉
+      const g1 = this.make.graphics({ x: 0, y: 0, add: false });
+      g1.fillStyle(0x00aaff, 1);
+      g1.fillCircle(32, 32, 32);
+      g1.generateTexture('ball1', 64, 64);
+
+      // 赤い玉
+      const g2 = this.make.graphics({ x: 0, y: 0, add: false });
+      g2.fillStyle(0xff4444, 1);
+      g2.fillCircle(32, 32, 32);
+      g2.generateTexture('ball2', 64, 64);
+    }
+
+    function create() {
+      // 玉1
+      const b1 = this.physics.add.sprite(200, 300, 'ball1');
+      b1.baseVx = 200;   // ★ 元の速度を保存
+      b1.baseVy = 150;
+      b1.setBounce(1, 1);
+      b1.setCollideWorldBounds(true);
+
+      // 玉2
+      const b2 = this.physics.add.sprite(600, 300, 'ball2');
+      b2.baseVx = -150;  // ★ 元の速度を保存
+      b2.baseVy = -200;
+      b2.setBounce(1, 1);
+      b2.setCollideWorldBounds(true);
+
+      balls.push(b1, b2);
+
+      // 初期速度を適用
+      applySpeed();
+
+      // 玉同士の衝突
+      this.physics.add.collider(balls[0], balls[1]);
+
+      // ★ スライダー UI のイベント設定
+      const slider = document.getElementById("speedSlider");
+      const valueLabel = document.getElementById("speedValue");
+
+      slider.addEventListener("input", () => {
+        speedScale = Number(slider.value);
+        valueLabel.textContent = speedScale.toFixed(1);
+        applySpeed();
+      });
+    }
+
+    // ★ 速度を再設定する関数
+    function applySpeed() {
+      balls.forEach(ball => {
+        ball.setVelocity(ball.baseVx * speedScale, ball.baseVy * speedScale);
+      });
+    }
+
+    function update() {
+      // 特に処理なし
+    }
+  </script>
+</body>
+</html>
