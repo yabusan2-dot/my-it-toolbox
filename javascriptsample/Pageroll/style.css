@@ -1,0 +1,13 @@
+.my-page {
+  background-color: bisque;
+}
+
+.p-right {
+  border-left: 0;
+  box-shadow: inset 7px 0 30px -7px rgba(0, 0, 0, 0.4);
+}
+
+.p-left {
+  border-right: 0;
+  box-shadow: inset -7px 0 30px -7px rgba(0, 0, 0, 0.4);
+}
